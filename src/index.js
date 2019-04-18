@@ -24,7 +24,7 @@ class HackeroneClient {
         options.uri += "reports/" + reportNumber;
 
         const result = await request(options).catch(function (err) {
-            console.log(err);
+            throw new Error(err);
         });
 
         return result;
@@ -65,7 +65,7 @@ class HackeroneClient {
                     }
 
                 }).catch(function (err) {
-                console.log(err);
+                throw new Error(err);
             });
         }
 
