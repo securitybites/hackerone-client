@@ -5,8 +5,17 @@
 
 ## How to Use:
 
+Setup
+
+```
+npm install hackerone-client --save
+```
+
+
 Create the client object using your Hackerone API key and key name:
 ```
+var HackeroneClient = require('hackerone-client');
+
 const Hackerone = new HackeroneClient(process.env.HACKERONE_API_KEY,
 process.env.HACKERONE_API_KEY_NAME);
 ```
