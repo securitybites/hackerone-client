@@ -20,7 +20,7 @@ class HackeroneClient {
 
     async readReport(reportNumber) {
 
-        const options = this.options;
+        const options = Object.assign({},this.options);
         options.uri += "reports/" + reportNumber;
 
         const result = await request(options).catch(function (err) {
@@ -32,7 +32,7 @@ class HackeroneClient {
 
     async queryReports(program,additionalFilters){
 
-        const options = this.options;
+        const options = Object.assign({},this.options);
 
         if(additionalFilters){
             options.uri += 'reports?filter[program][]=' + program + '&';
