@@ -21,6 +21,14 @@ class HackeroneClient {
     };
   }
 
+  async verifyAccess() {
+    const options = Object.assign({}, this.options);
+    options.uri += "users/" + this.h1Key_name;
+    await request(options).catch(function(err) {
+      throw new Error(err);
+    });
+  }
+
   async readReport(reportNumber) {
     const options = Object.assign({}, this.options);
     options.uri += "reports/" + reportNumber;
