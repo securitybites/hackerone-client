@@ -21,6 +21,19 @@ class HackeroneClient {
     };
   }
 
+
+  async getPrograms() {
+    const options = Object.assign({}, this.options);
+    options.uri += "me/programs";
+
+    const result = await request(options).catch(function(err) {
+      throw new Error(err);
+    });
+
+    return result;
+  }
+
+
   async verifyAccess() {
     const options = Object.assign({}, this.options);
     options.uri += "users/" + this.h1Key_name;
@@ -28,6 +41,19 @@ class HackeroneClient {
       throw new Error(err);
     });
   }
+
+
+  async swag(programId) {
+    const options = Object.assign({}, this.options);
+    options.uri += "programs/" + programId + "/swag";
+
+    const result = await request(options).catch(function(err) {
+      throw new Error(err);
+    });
+
+    return result;
+  }
+
 
   async readReport(reportNumber) {
     const options = Object.assign({}, this.options);
