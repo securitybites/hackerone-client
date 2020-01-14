@@ -70,10 +70,10 @@ class HackeroneClient {
     const options = Object.assign({}, this.options);
 
     if (additionalFilters) {
-      options.uri += "reports?filter[program][]=" + program + "&";
+      options.uri += "reports?filter[program][]=" + program;
       for (const key in additionalFilters) {
         let value = additionalFilters[key];
-        options.uri += key + "=" + value;
+        options.uri += "&" + key + "=" + value;
       }
     } else {
       options.uri += "reports?filter[program][]=" + program;
