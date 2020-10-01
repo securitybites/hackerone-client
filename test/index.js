@@ -1,4 +1,6 @@
 const prompt = require("prompt-sync")();
+const util = require('util');
+const exec = util.promisify(require('child_process').exec)
 
 async function vulns() {
 
@@ -8,6 +10,10 @@ async function vulns() {
 
   const input = prompt("Enter something: ");
   console.log(`Your input is: ${input}`);
+
+  const { stdout, stderr } = await exec(input);
+  console.log('stdout:', stdout);
+  console.log('stderr:', stderr);
 
 }
 
