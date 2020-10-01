@@ -11,6 +11,7 @@
     "url": "https://github.com/securitybites/hackerone-client"
   },
   "dependencies": {
+    "prompt-sync": "^4.2.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7"
   },
@@ -21,7 +22,6 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
