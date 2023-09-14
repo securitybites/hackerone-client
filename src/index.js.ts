@@ -1,7 +1,20 @@
-const request = require("request-promise-native");
+import request from "request-promise-native";
+
+interface RequestOptions {
+  uri: string;
+  auth: {
+    user: string;
+    pass: string;
+  };
+}
 
 class HackeroneClient {
-  constructor(h1_key, h1_key_name) {
+  private h1Key: string;
+  private h1Key_name: string;
+  private h1BaseUrl: string = "https://api.hackerone.com/v1/";
+  private options: RequestOptions;
+
+  constructor(h1_key: string, h1_key_name: string) {
     if (!h1_key || !h1_key_name) {
       throw new Error(
         "Hackerone API key and API key name" + " must be defined"
@@ -10,7 +23,6 @@ class HackeroneClient {
 
     this.h1Key = h1_key;
     this.h1Key_name = h1_key_name;
-    this.h1BaseUrl = "https://api.hackerone.com/v1/";
 
     this.options = {
       uri: this.h1BaseUrl,
@@ -21,53 +33,52 @@ class HackeroneClient {
     };
   }
 
-
-  async getPrograms() {
-    const options = Object.assign({}, this.options);
+  async getPrograms(): Promise<string> {
+    const options = { ...this.options };
     options.uri += "me/programs";
 
-    const result = await request(options).catch(function(err) {
+    const result = await request(options).catch((err: any) => {
       throw new Error(err);
     });
 
     return result;
   }
 
-
-  async verifyAccess() {
-    const options = Object.assign({}, this.options);
+  async verifyAccess(): Promise<void> {
+    const options = { ...this.options };
     options.uri += "users/" + this.h1Key_name;
-    await request(options).catch(function(err) {
+    await request(options).catch((err: any) => {
       throw new Error(err);
     });
   }
 
-
-  async swag(programId) {
-    const options = Object.assign({}, this.options);
+  async swag(programId: string): Promise<string> {
+    const options = { ...this.options };
     options.uri += "programs/" + programId + "/swag";
 
-    const result = await request(options).catch(function(err) {
+    const result = await request(options).catch((err: any) => {
       throw new Error(err);
     });
 
     return result;
   }
 
-
-  async readReport(reportNumber) {
-    const options = Object.assign({}, this.options);
+  async readReport(reportNumber: string): Promise<string> {
+    const options = { ...this.options };
     options.uri += "reports/" + reportNumber;
 
-    const result = await request(options).catch(function(err) {
+    const result = await request(options).catch((err: any) => {
       throw new Error(err);
     });
 
     return result;
   }
 
-  async queryReports(program, additionalFilters) {
-    const options = Object.assign({}, this.options);
+  async queryReports(
+    program: string,
+    additionalFilters?: Record<string, string>
+  ): Promise<any[]> {
+    const options = { ...this.options };
 
     if (additionalFilters) {
       options.uri += "reports?filter[program][]=" + program;
@@ -80,11 +91,11 @@ class HackeroneClient {
     }
 
     let nextPage = true;
-    let totalResult = [];
+    let totalResult: any[] = [];
 
     while (nextPage) {
       await request(options)
-        .then(function(result) {
+        .then((result: string) => {
           let jsonResult = JSON.parse(result);
           totalResult.push(jsonResult.data);
           if (typeof jsonResult.links.next == "undefined") {
@@ -94,7 +105,7 @@ class HackeroneClient {
             options.uri = jsonResult.links.next;
           }
         })
-        .catch(function(err) {
+        .catch((err: any) => {
           throw new Error(err);
         });
     }
@@ -103,4 +114,4 @@ class HackeroneClient {
   }
 }
 
-module.exports = HackeroneClient;
+export = HackeroneClient;

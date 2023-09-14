@@ -8,16 +8,18 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/securitybites/hackerone-client"
+    "url": "git+https://github.com/securitybites/hackerone-client.git"
   },
   "dependencies": {
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7"
   },
   "devDependencies": {
+    "@types/request-promise-native": "^1.0.18",
     "eslint": "^5.16.0",
     "husky": "^2.2.0",
-    "lint-staged": "^13.0.2"
+    "lint-staged": "^13.0.2",
+    "typescript": "^5.2.2"
   },
   "husky": {
     "hooks": {
@@ -29,5 +31,9 @@
       "eslint --fix",
       "git add"
     ]
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/securitybites/hackerone-client/issues"
+  },
+  "homepage": "https://github.com/securitybites/hackerone-client#readme"
 }
